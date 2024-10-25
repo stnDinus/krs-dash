@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import SignInForm from "./form";
+import SignInForm from "./SignInForm";
 
 export default function SignInPage() {
   return (
