@@ -25,11 +25,11 @@ export default function SignInForm() {
     resolver: zodResolver(schema),
   });
   const router = useRouter();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   async function helper(v: schemaT) {
-    setLoading(true)
+    setLoading(true);
     const success = await signin(v.username, v.password);
-    setLoading(false)
+    setLoading(false);
 
     if (!success) {
       toast.error("Kombinasi username dan password salah");
