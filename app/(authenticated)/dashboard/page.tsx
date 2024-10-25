@@ -1,7 +1,5 @@
-"use server"
+"use server";
 
 export default async function DashboardPage() {
-  return <>
-    dashboard
-  </>
+  return <>dashboard</>;
 }

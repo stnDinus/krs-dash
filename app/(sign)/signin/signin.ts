@@ -1,7 +1,11 @@
 "use server";
 
 import schema from "./schema";
-import { InvalidPassword, InvalidUsername, default as signin_db } from "@/db/users/signin";
+import {
+  InvalidPassword,
+  InvalidUsername,
+  default as signin_db,
+} from "@/db/users/signin";
 import { sign } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { jwtCookieName, jwtSecret } from "@/lib/auth";
@@ -15,24 +19,24 @@ const signin = async (data: FormData): Promise<boolean> => {
 
   try {
     schema.parse({ username, password });
-    await signin_db(username!.toString(), password!.toString())
+    await signin_db(username!.toString(), password!.toString());
   } catch (err) {
     if (err instanceof InvalidUsername || err instanceof InvalidPassword) {
-      return false
+      return false;
     }
     console.error(err);
-    return false
+    return false;
   }
 
-  const jwtSession = sign({ username }, jwtSecret)
+  const jwtSession = sign({ username }, jwtSecret);
 
   cookies().set(jwtCookieName, jwtSession, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-  })
+  });
 
-  return true
+  return true;
 };
 
 export default signin;

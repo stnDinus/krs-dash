@@ -15,7 +15,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Dashboard KRS"
+  title: "Dashboard KRS",
 };
 
 export default function RootLayout({

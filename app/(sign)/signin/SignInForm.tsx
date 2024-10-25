@@ -24,23 +24,20 @@ export default function SignInForm() {
     resolver: zodResolver(schema),
   });
   const formEl = useRef<HTMLFormElement>(null);
-  const router = useRouter()
+  const router = useRouter();
   async function helper() {
-    const success = await signin(new FormData(formEl.current!))
+    const success = await signin(new FormData(formEl.current!));
     if (!success) {
-      toast.error("Kombinasi username dan password salah")
-      return
+      toast.error("Kombinasi username dan password salah");
+      return;
     }
 
-    router.push("/dashboard")
+    router.push("/dashboard");
   }
 
   return (
     <Form {...form}>
-      <form
-        ref={formEl}
-        onSubmit={form.handleSubmit(helper)}
-      >
+      <form ref={formEl} onSubmit={form.handleSubmit(helper)}>
         <FormField
           control={form.control}
           name="username"
@@ -62,13 +59,19 @@ export default function SignInForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Masukan password anda" type="password" {...field} />
+                <Input
+                  placeholder="Masukan password anda"
+                  type="password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="mt-6">Login</Button>
+        <Button type="submit" className="mt-6">
+          Login
+        </Button>
       </form>
     </Form>
   );
