@@ -15,17 +15,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import signin from "./signin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 
 export default function SignInForm() {
   const form = useForm<schemaT>({
     resolver: zodResolver(schema),
   });
   const router = useRouter();
+  const [loading, setLoading] = useState(false)
   async function helper(v: schemaT) {
+    setLoading(true)
     const success = await signin(v.username, v.password);
+    setLoading(false)
+
     if (!success) {
       toast.error("Kombinasi username dan password salah");
       return;
@@ -68,7 +73,8 @@ export default function SignInForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="mt-6">
+        <Button disabled={loading} type="submit" className="mt-6">
+          {loading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
           Login
         </Button>
       </form>
