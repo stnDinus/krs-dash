@@ -7,14 +7,7 @@ export class InvalidUsername extends Error {
   }
 }
 
-export class InvalidPassword extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "InvalidPassword";
-  }
-}
-
-export default async function signin(username: string, password: string) {
+export default async function fetchPassword(username: string) {
   const res = await pool.query("select password from users where id = $1", [
     username,
   ]);
@@ -24,10 +17,6 @@ export default async function signin(username: string, password: string) {
     );
   }
 
-  const dbPass = res.rows[0].password;
-  if (password != dbPass) {
-    throw new InvalidPassword(
-      `Wrong password for user with the username "${username}"" got ${password}`,
-    );
-  }
+  const password = res.rows[0].password as string;
+  return password;
 }
