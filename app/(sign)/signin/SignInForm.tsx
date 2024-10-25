@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import signin from "./signin";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useRef } from "react";
+import React from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -23,10 +23,9 @@ export default function SignInForm() {
   const form = useForm<schemaT>({
     resolver: zodResolver(schema),
   });
-  const formEl = useRef<HTMLFormElement>(null);
   const router = useRouter();
-  async function helper() {
-    const success = await signin(new FormData(formEl.current!));
+  async function helper(v: schemaT) {
+    const success = await signin(v.username, v.password);
     if (!success) {
       toast.error("Kombinasi username dan password salah");
       return;
@@ -37,7 +36,7 @@ export default function SignInForm() {
 
   return (
     <Form {...form}>
-      <form ref={formEl} onSubmit={form.handleSubmit(helper)}>
+      <form onSubmit={form.handleSubmit(helper)}>
         <FormField
           control={form.control}
           name="username"

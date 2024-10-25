@@ -13,10 +13,7 @@ import { jwtCookieName, jwtSecret } from "@/lib/auth";
 /**
  * @returns success {boolean}
  */
-const signin = async (data: FormData): Promise<boolean> => {
-  const username = data.get("username");
-  const password = data.get("password");
-
+const signin = async (username: string, password: string): Promise<boolean> => {
   try {
     schema.parse({ username, password });
     await signin_db(username!.toString(), password!.toString());
